@@ -1,0 +1,2 @@
+[workspace]
+members = ["base", "error-chain", "failure", "std", "snafu", "anyhow", "thiserror", "diptych"]
