@@ -78,6 +78,10 @@ Combined _Run_ : `cargo run --bin diptych`
 Currently I'm using the diptych anyhow / thiserror in my projects
 
 
+## Eyre
+
+Work in progress
+
 # The future
 
 See the error working group [here](https://rust-lang.github.io/rfcs/2965-project-error-handling.html)

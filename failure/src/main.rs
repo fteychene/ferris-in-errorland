@@ -30,7 +30,7 @@ fn load_attendees(filename: &str) -> Result<Vec<Attendee>, Error> {
 fn lottery<'a>(rng: &mut ThreadRng, attendees: &'a Vec<Attendee>, nb: usize) -> Result<Vec<&'a Attendee>, Error> {
     let sample = attendees.choose_multiple(rng,nb)
         .collect::<Vec<_>>();
-    if sample.len() != nb { bail!(NotEnoughtParticipant{ asked: nb, existing: sample.len()})}
+    if sample.len() != nb { bail!(NotEnoughParticipant{ asked: nb, existing: sample.len()})}
     Ok(sample)
 }
 

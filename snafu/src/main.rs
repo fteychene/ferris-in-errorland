@@ -29,7 +29,7 @@ enum Error {
 
 type Result<T, E = Error> = std::result::Result<T, E>;
 
-fn load_attendees(filename: &str) -> Result<Vec<Attendee>, Error> {
+fn load_attendees(filename: &str) -> Result<Vec<Attendee>> {
     let file = File::open(filename).context(LoadAttendees { filename: filename.to_string() })?;
     BufReader::new(file).lines()
         .map(|read| read.map(|value| Attendee { name: value }))
@@ -37,7 +37,7 @@ fn load_attendees(filename: &str) -> Result<Vec<Attendee>, Error> {
         .context(ReadAttendeesFile)
 }
 
-fn lottery<'a>(rng: &mut ThreadRng, attendees: &'a Vec<Attendee>, nb: usize) -> Result<Vec<&'a Attendee>, Error> {
+fn lottery<'a>(rng: &mut ThreadRng, attendees: &'a Vec<Attendee>, nb: usize) -> Result<Vec<&'a Attendee>> {
     let sample = attendees.choose_multiple(rng, nb)
         .collect::<Vec<_>>();
     ensure!(sample.len() == nb, NotEnoughParticipant { asked: nb, existing: sample.len() });
@@ -49,7 +49,7 @@ fn main() -> Result<(), Error> {
     let attendees = load_attendees("attendees.txt")?;
     println!("Winning 3 on attendees.txt : {:?}", lottery(&mut rng, &attendees, 3));
     println!("Error business : {}", lottery(&mut rng, &attendees, 6).unwrap_err());
-    println!("Error io : {}", load_attendees("attendees2.txt").unwrap_err());
+    println!("Error io : {:?}", load_attendees("attendees2.txt").unwrap_err());
     Ok(())
 }
 
